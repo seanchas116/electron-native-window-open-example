@@ -1,19 +1,23 @@
 const {app, BrowserWindow, ipcMain} = require("electron")
 
+let win = null
+let modal = null
+
 app.on('ready', () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-  })
-  let modal = null
   ipcMain.on("closeModal", () => {
     if (modal) {
       modal.close()
-      modal = null
     }
   })
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+  })
+  win.on("closed", () => {
+    win = null
+  })
   win.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
-    if (url.endsWith("modal.html")) {
+    if (frameName == "modal") {
       event.preventDefault()
       Object.assign(options, {
         modal: true,
@@ -22,7 +26,9 @@ app.on('ready', () => {
         height: 100
       })
       modal = new BrowserWindow(options)
-      modal.loadURL(url)
+      modal.on("closed", () => {
+        modal = null
+      })
       event.newGuest = modal
     }
   })
