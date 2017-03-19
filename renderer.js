@@ -8,7 +8,7 @@ const showModal = () => {
     const cancelButton = modal.document.getElementById("cancel")
     okButton.addEventListener("click", () => {
       resultDiv.innerText = "OK"
-      // modal.close doesn't work now
+      // modal.close() or browserWindow.close() doesn't work now
       ipcRenderer.send("closeModal")
     })
     cancelButton.addEventListener("click", () => {
