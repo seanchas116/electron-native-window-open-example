@@ -9,6 +9,13 @@ app.on('ready', () => {
     //   sandbox: false, 
     // },
   })
+  win.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
+    console.log(options)
+    event.preventDefault()
+    let win = new BrowserWindow(options)
+    win.loadURL(url)
+    event.newGuest = win
+  })
   win.loadURL("file://" + __dirname + "/index.html")
   win.openDevTools()
 })
