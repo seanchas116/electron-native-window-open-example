@@ -4,10 +4,6 @@ app.on('ready', () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    // webPreferences: {
-    //   webSecurity: false,
-    //   sandbox: false, 
-    // },
   })
   win.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
     console.log(options)
