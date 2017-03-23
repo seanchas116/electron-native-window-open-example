@@ -20,7 +20,7 @@ app.on('ready', () => {
     win = null
   })
   win.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
-    if (frameName == "modal") {
+    if (url.endsWith("modal.html")) {
       event.preventDefault()
       Object.assign(options, {
         modal: true,
